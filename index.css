@@ -1,0 +1,144 @@
+:root {
+    --scrollspy-height: 60px;
+}
+
+body {
+    max-width: 600px;
+    padding-bottom: 30vh;
+    margin: 0 auto;
+    scroll-behavior: smooth;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin: 0;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    height: var(--scrollspy-height, 2em);
+    overflow-y: hidden;
+    text-align: center;
+}
+
+nav[aria-expanded="true"] {
+    height: auto;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    transition: transform 100ms;
+}
+
+nav[aria-expanded="true"] ul {
+    transform: translateY(0) !important;
+}
+
+nav li {
+    height: var(--scrollspy-height, 2em);
+}
+
+nav li:nth-of-type(1) {
+    background-color: #ff0000;
+}
+
+nav li:nth-of-type(2) {
+    background-color: #ff7f00;
+}
+
+nav li:nth-of-type(3) {
+    background-color: #ffff00;
+}
+
+nav li:nth-of-type(4) {
+    background-color: #00ff00;
+}
+
+nav li:nth-of-type(5) {
+    background-color: #0000ff;
+}
+
+nav li:nth-of-type(6) {
+    background-color: #6600ff;
+}
+
+nav li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    line-height: var(--scrollspy-height);
+}
+
+nav li:nth-of-type(3) a {
+    color: gray;
+}
+
+nav [role="button"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    height: var(--scrollspy-height);
+    padding:0 0.5em;
+    line-height: var(--scrollspy-height);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+section {
+    min-height: 80vh;
+    padding-top: var(--scrollspy-height);
+}
+
+section:nth-of-type(1) {
+    background-color: #ffcccc;
+}
+
+section:nth-of-type(2) {
+    background-color: #ffeacc;
+}
+
+section:nth-of-type(3) {
+    background-color: #fffecc;
+}
+
+section:nth-of-type(4) {
+    background-color: #c7f5c4;
+}
+
+section:nth-of-type(5) {
+    background-color: #c4daf4;
+}
+
+section:nth-of-type(6) {
+    background-color: #e1c4f4;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+pre {
+    margin: 1em;
+    padding: 1em 0.5em;
+    background-color: #eeeeee;
+}
+
+code {
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+    letter-spacing: 0.1em;
+}
+
+p code {
+    text-decoration: underline;
+    text-decoration-style: dashed;
+}
