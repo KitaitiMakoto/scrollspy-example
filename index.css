@@ -18,6 +18,7 @@ h2 {
 }
 
 nav {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     height: var(--scrollspy-height, 2em);
