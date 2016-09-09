@@ -7,18 +7,18 @@ class Scrollspy {
     this.button = this.element.querySelector('[role="button"]');
     this.height = this.element.getBoundingClientRect().height;
     this.observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${this.height}px`});
-    this.targets = {};
+    this.targets = [];
     var as = element.querySelectorAll('[href^="#"]');
     for (var i = 0, l = as.length; i < l; i++) {
       (function(a) {
         var id = a.hash.slice(1);
-        this.targets[id] = {
+        this.targets.push({
           a: a,
           target: document.getElementById(id)
-        };
+        });
       }.bind(this))(as[i])
     }
-    Object.values(this.targets).forEach(pair => {
+    this.targets.forEach(pair => {
       this.observer.observe(pair.target);
       pair.a.addEventListener('click', event => {
         this.element.setAttribute('aria-expanded', 'false');
@@ -33,14 +33,13 @@ class Scrollspy {
 
   onIntersectionChange(changes) {
     var targetIndex = 0;
-    var pairs = Object.values(this.targets);
-    pairs.forEach((pair, index) => {
+    this.targets.forEach((pair, index) => {
       var offset = pair.target.getBoundingClientRect().top - this.height;
       if (offset <= 0) {
         targetIndex = index;
       }
     });
-    pairs.forEach((pair, index) => {
+    this.targets.forEach((pair, index) => {
       var value = (index === targetIndex) ? 'true' : 'false';
       pair.a.setAttribute('aria-selected', value);
     });
