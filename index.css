@@ -75,7 +75,7 @@ nav li a {
     text-decoration: none;
     color: white;
     font-weight: bold;
-    line-height: var(--scrollspy-height);
+    line-height: var(--scrollspy-height, 2em);
 }
 
 nav li:nth-of-type(3) a {
@@ -87,16 +87,16 @@ nav [role="button"] {
     top: 0;
     right: 0;
     display: inline-block;
-    height: var(--scrollspy-height);
+    height: var(--scrollspy-height, 2em);
     padding:0 0.5em;
-    line-height: var(--scrollspy-height);
+    line-height: var(--scrollspy-height, 2em);
     text-decoration: none;
     cursor: pointer;
 }
 
 section {
     min-height: 80vh;
-    padding-top: var(--scrollspy-height);
+    padding-top: var(--scrollspy-height, 2em);
 }
 
 section:nth-of-type(1) {
