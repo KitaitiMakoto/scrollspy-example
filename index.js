@@ -12,7 +12,7 @@ class Scrollspy {
     for (var i = 0, l = as.length; i < l; i++) {
       (function(a) {
         var id = a.hash.slice(1);
-        this.targets[id] ={
+        this.targets[id] = {
           a: a,
           target: document.getElementById(id)
         };
