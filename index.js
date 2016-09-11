@@ -49,6 +49,7 @@ class Scrollspy {
     this.element.dispatchEvent(event);
   }
 
+  // TODO: binary search
   findTargetIndex() {
     for (var i = 0, l = this.targets.length; i < l; i++) {
       var pair = this.targets[i]
