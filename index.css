@@ -96,7 +96,7 @@ nav [role="button"] {
 
 section {
     min-height: 80vh;
-    padding-top: var(--scrollspy-height, 2em);
+    padding: var(--scrollspy-height, 2em) 1em 0;
     border-bottom: 1px solid transparent;
 }
 
