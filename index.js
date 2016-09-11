@@ -18,12 +18,14 @@ class Scrollspy {
         });
       }.bind(this))(as[i])
     }
+    this.targetIndex = 0;
     this.targets.forEach(function(pair) {
       this.observer.observe(pair.target);
       pair.a.addEventListener('click', function(event) {
         this.element.setAttribute('aria-expanded', 'false');
       }.bind(this));
     }.bind(this));
+    this.element.addEventListener('targetchange', this.onTargetChange.bind(this));
     this.button.addEventListener('click', function(event) {
       var expanded = this.element.getAttribute('aria-expanded');
       var value = (expanded === 'true') ? 'false' : 'true';
@@ -33,12 +35,18 @@ class Scrollspy {
 
   onIntersectionChange(changes) {
     var targetIndex = this.findTargetIndex();
-    this.targets.forEach(function(pair, index) {
-      var value = (index === targetIndex) ? 'true' : 'false';
-      pair.a.setAttribute('aria-selected', value);
+    if (targetIndex === this.targetIndex) {
+      return;
+    }
+    var newTarget = this.targets[targetIndex].target.id;
+    var event = new CustomEvent('targetchange', {
+      detail: {
+        newTargetIndex: targetIndex,
+        oldTargetIndex: this.targetIndex
+      }
     });
-    var transform = `translateY(calc(-${targetIndex} * var(--scrollspy-height)))`;
-    this.ul.style.transform = transform;
+    this.targetIndex = targetIndex;
+    this.element.dispatchEvent(event);
   }
 
   findTargetIndex() {
@@ -51,6 +59,13 @@ class Scrollspy {
     }
 
     return (i === 0) ? i : (i - 1);
+  }
+
+  onTargetChange(event) {
+    this.targets[event.detail.oldTargetIndex].a.setAttribute('aria-selected', 'false');
+    this.targets[event.detail.newTargetIndex].a.setAttribute('aria-selected', 'true');
+    var transform = `translateY(calc(-${event.detail.newTargetIndex} * var(--scrollspy-height)))`;
+    this.ul.style.transform = transform;
   }
 }
 
