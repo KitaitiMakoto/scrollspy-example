@@ -87,11 +87,19 @@ nav [role="button"] {
     top: 0;
     right: 0;
     display: inline-block;
+    width: 100%;
     height: var(--scrollspy-height, 2em);
-    padding:0 0.5em;
+    padding: 0;
+    padding-right: 0.5em;
     line-height: var(--scrollspy-height, 2em);
+    text-align: right;
     text-decoration: none;
     cursor: pointer;
+}
+
+nav[aria-expanded="true"] [role="button"] {
+    width: auto;
+    padding-right: 0.5em;
 }
 
 section {
