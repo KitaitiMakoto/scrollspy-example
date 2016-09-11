@@ -66,6 +66,8 @@ class Scrollspy {
     this.targets[event.detail.newTargetIndex].a.setAttribute('aria-selected', 'true');
     var transform = `translateY(calc(-${event.detail.newTargetIndex} * var(--scrollspy-height)))`;
     this.ul.style.transform = transform;
+    var a = this.targets[event.detail.newTargetIndex].a;
+    history.replaceState(null, a.textContent, a.hash);
   }
 }
 
