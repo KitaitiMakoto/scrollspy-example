@@ -43,7 +43,7 @@ class Scrollspy {
       var value = (index === targetIndex) ? 'true' : 'false';
       pair.a.setAttribute('aria-selected', value);
     });
-    var transform = `translateY(-${targetIndex * this.height}px)`;
+    var transform = `translateY(calc(-${targetIndex} * var(--scrollspy-height)))`;
     this.ul.style.transform = transform;
   }
 }
