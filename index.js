@@ -23,6 +23,7 @@ class Scrollspy {
       this.observer.observe(pair.target);
       pair.a.addEventListener('click', function(event) {
         this.element.setAttribute('aria-expanded', 'false');
+        this.button.setAttribute('aria-expanded', 'false');
       }.bind(this));
     }.bind(this));
     this.element.addEventListener('targetchange', this.onTargetChange.bind(this));
@@ -30,6 +31,7 @@ class Scrollspy {
       var expanded = this.element.getAttribute('aria-expanded');
       var value = (expanded === 'true') ? 'false' : 'true';
       this.element.setAttribute('aria-expanded', value);
+      this.button.setAttribute('aria-expanded', value);
     }.bind(this));
   }
 
