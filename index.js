@@ -8,6 +8,8 @@ class Scrollspy {
     this.height = this.element.getBoundingClientRect().height;
     this.observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${this.height}px`});
     this.targets = [];
+    this.targetIndices = {};
+    this.indicesInViewPort = [];
     var as = element.querySelectorAll('[href^="#"]');
     for (var i = 0, l = as.length; i < l; i++) {
       (function(a) {
@@ -16,9 +18,9 @@ class Scrollspy {
           a: a,
           target: document.getElementById(id)
         });
+        this.targetIndices[id] = i;
       }.bind(this))(as[i])
     }
-    this.targetIndex = 0;
     this.targets.forEach(function(pair) {
       this.observer.observe(pair.target);
       pair.a.addEventListener('click', function(event) {
@@ -36,32 +38,31 @@ class Scrollspy {
   }
 
   onIntersectionChange(changes) {
-    var targetIndex = this.findTargetIndex();
-    if (targetIndex === this.targetIndex) {
+    var oldTargetIndex = this.indicesInViewPort[0] || 0;
+    for (var i = changes.length - 1; i >= 0; i--) {
+      var change = changes[i];
+      var index = this.targetIndices[change.target.id];
+      if (change.intersectionRatio === 0) {
+        var indexInViewPort = this.indicesInViewPort.indexOf(index);
+        this.indicesInViewPort.splice(indexInViewPort, 1);
+      } else {
+        if (index < oldTargetIndex) {
+          this.indicesInViewPort.unshift(index);
+        } else {
+          this.indicesInViewPort.push(index);
+        }
+      }
+    }
+    if (oldTargetIndex === this.indicesInViewPort[0]) {
       return;
     }
-    var newTarget = this.targets[targetIndex].target.id;
     var event = new CustomEvent('targetchange', {
       detail: {
-        newTargetIndex: targetIndex,
-        oldTargetIndex: this.targetIndex
+        newTargetIndex: this.indicesInViewPort[0],
+        oldTargetIndex: oldTargetIndex
       }
     });
-    this.targetIndex = targetIndex;
     this.element.dispatchEvent(event);
-  }
-
-  // TODO: binary search
-  findTargetIndex() {
-    for (var i = 0, l = this.targets.length; i < l; i++) {
-      var pair = this.targets[i]
-      var offset = pair.target.getBoundingClientRect().top - this.height;
-      if (offset > 0) {
-        return (i === 0) ? i : (i - 1);
-      }
-    }
-
-    return (i === 0) ? i : (i - 1);
   }
 
   onTargetChange(event) {
