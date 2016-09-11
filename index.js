@@ -18,28 +18,28 @@ class Scrollspy {
         });
       }.bind(this))(as[i])
     }
-    this.targets.forEach(pair => {
+    this.targets.forEach(function(pair) {
       this.observer.observe(pair.target);
-      pair.a.addEventListener('click', event => {
+      pair.a.addEventListener('click', function(event) {
         this.element.setAttribute('aria-expanded', 'false');
-      });
-    });
-    this.button.addEventListener('click', event => {
+      }.bind(this));
+    }.bind(this));
+    this.button.addEventListener('click', function(event) {
       var expanded = this.element.getAttribute('aria-expanded');
       var value = (expanded === 'true') ? 'false' : 'true';
       this.element.setAttribute('aria-expanded', value);
-    });
+    }.bind(this));
   }
 
   onIntersectionChange(changes) {
     var targetIndex = 0;
-    this.targets.forEach((pair, index) => {
+    this.targets.forEach(function(pair, index) {
       var offset = pair.target.getBoundingClientRect().top - this.height;
       if (offset <= 0) {
         targetIndex = index;
       }
-    });
-    this.targets.forEach((pair, index) => {
+    }.bind(this));
+    this.targets.forEach(function(pair, index) {
       var value = (index === targetIndex) ? 'true' : 'false';
       pair.a.setAttribute('aria-selected', value);
     });
@@ -48,6 +48,6 @@ class Scrollspy {
   }
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('load', function() {
   new Scrollspy(document.getElementsByTagName('nav')[0]);
 });
