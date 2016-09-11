@@ -68,7 +68,11 @@ class Scrollspy {
     var transform = `translateY(calc(-${event.detail.newTargetIndex} * var(--scrollspy-height)))`;
     this.ul.style.transform = transform;
     var a = this.targets[event.detail.newTargetIndex].a;
+    var event = new Event('hashchange');
+    event.oldURL = location.href;
+    event.newURL = a.href;
     history.replaceState(null, a.textContent, a.hash);
+    dispatchEvent(event);
   }
 }
 
