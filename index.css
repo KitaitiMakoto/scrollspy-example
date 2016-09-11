@@ -121,11 +121,13 @@ nav [role="button"] {
     text-align: right;
     text-decoration: none;
     cursor: pointer;
+    transition: transform 300ms;
 }
 
 nav [role="button"][aria-expanded="true"] {
     width: auto;
     padding-right: 0.5em;
+    transform: rotateX(180deg);
 }
 
 section {
