@@ -32,19 +32,25 @@ class Scrollspy {
   }
 
   onIntersectionChange(changes) {
-    var targetIndex = 0;
-    this.targets.forEach(function(pair, index) {
-      var offset = pair.target.getBoundingClientRect().top - this.height;
-      if (offset <= 0) {
-        targetIndex = index;
-      }
-    }.bind(this));
+    var targetIndex = this.findTargetIndex();
     this.targets.forEach(function(pair, index) {
       var value = (index === targetIndex) ? 'true' : 'false';
       pair.a.setAttribute('aria-selected', value);
     });
     var transform = `translateY(calc(-${targetIndex} * var(--scrollspy-height)))`;
     this.ul.style.transform = transform;
+  }
+
+  findTargetIndex() {
+    for (var i = 0, l = this.targets.length; i < l; i++) {
+      var pair = this.targets[i]
+      var offset = pair.target.getBoundingClientRect().top - this.height;
+      if (offset > 0) {
+        return (i === 0) ? i : (i - 1);
+      }
+    }
+
+    return (i === 0) ? i : (i - 1);
   }
 }
 
