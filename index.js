@@ -67,8 +67,7 @@ class Scrollspy {
   onTargetChange(event) {
     this.targets[event.detail.oldTargetIndex].a.setAttribute('aria-selected', 'false');
     this.targets[event.detail.newTargetIndex].a.setAttribute('aria-selected', 'true');
-    var transform = `translateY(calc(-${event.detail.newTargetIndex} * var(--scrollspy-height)))`;
-    this.ul.style.transform = transform;
+    this.ul.dataset.scrollspyIndex = '' + event.detail.newTargetIndex;
     var a = this.targets[event.detail.newTargetIndex].a;
     var event = new Event('hashchange');
     event.oldURL = location.href;
