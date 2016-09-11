@@ -7,6 +7,7 @@ body {
     padding-bottom: 30vh;
     margin: 0 auto;
     scroll-behavior: smooth;
+    line-height: 2em;
 }
 
 h1 {
