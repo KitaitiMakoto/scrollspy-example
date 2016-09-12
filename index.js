@@ -48,8 +48,11 @@ class Scrollspy {
       } else {
         if (index < oldTargetIndex) {
           this.indicesInViewPort.unshift(index);
+        } else if (index > this.indicesInViewPort[this.indicesInViewPort.length - 1]) {
+          this.indicesInViewPort.push(index);
         } else {
           this.indicesInViewPort.push(index);
+          this.indicesInViewPort.sort();
         }
       }
     }
