@@ -1,20 +1,16 @@
 'use strict';
 
 class Scrollspy {
-  constructor(element) {
+  constructor(element, ids, observerOptions) {
     this.element = element;
     this.targets = [];
     this.targetIndices = {};
     this.indicesInViewPort = [];
-    var as = element.querySelectorAll('[href^="#"]');
-    var id;
-    for (var i = 0, l = as.length; i < l; i++) {
-      id = as[i].hash.slice(1);
+    ids.forEach(function(id, index) {
       this.targets.push(document.getElementById(id));
-      this.targetIndices[id] = i;
-    }
-    var height = getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
-    var observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${height}`});
+      this.targetIndices[id] = index;
+    }.bind(this));
+    var observer = new IntersectionObserver(this.onIntersectionChange.bind(this), observerOptions);
     this.targets.forEach(observer.observe.bind(observer));
   }
 
@@ -65,6 +61,10 @@ class Navigation {
     }
     this.button = this.element.getElementsByTagName('button')[0];
     this.button.addEventListener('click', this.toggle.bind(this));
+  }
+
+  get height() {
+    return getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
   }
 
   onTargetChange(event) {
@@ -123,5 +123,5 @@ document.addEventListener('DOMContentLoaded', function() {
     console.dir(event);
   });
 
-  new Scrollspy(nav);
+  new Scrollspy(nav, Object.keys(navigation.links), {rootMargin: `-${navigation.height}`});
 });
