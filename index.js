@@ -57,13 +57,13 @@ class Navigation {
   constructor(element) {
     this.element = element;
     this.links = {};
-    this.button = this.element.getElementsByTagName('button')[0];
     var as = this.element.getElementsByTagName('a');
     for (var i = 0, l = as.length; i < l; i++) {
       var a = as[i];
       this.links[a.hash.slice(1)] = a;
       a.addEventListener('click', this.close.bind(this));
     }
+    this.button = this.element.getElementsByTagName('button')[0];
     this.button.addEventListener('click', this.toggle.bind(this));
   }
 
@@ -113,15 +113,12 @@ class HashchangeDispatcher {
 
 document.addEventListener('DOMContentLoaded', function() {
   var nav = document.getElementsByTagName('nav')[0];
-
   var navigation = new Navigation(nav);
-  nav.addEventListener('targetchange', navigation.onTargetChange.bind(navigation));
-
   var historyManager = new HistoryManager();
-  nav.addEventListener('targetchange', historyManager.onTargetChange.bind(historyManager));
-
   var hashchangeDispatcher = new HashchangeDispatcher();
-  nav.addEventListener('targetchange', hashchangeDispatcher.onTargetChange.bind(hashchangeDispatcher));
+  [navigation, historyManager, hashchangeDispatcher].forEach(function(listener) {
+    nav.addEventListener('targetchange', listener.onTargetChange.bind(listener));
+  });
   addEventListener('hashchange', function(event) {
     console.dir(event);
   });
