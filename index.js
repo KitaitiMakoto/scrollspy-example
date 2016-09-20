@@ -5,8 +5,8 @@ class Scrollspy {
     this.element = element;
     this.ul = this.element.getElementsByTagName('ul')[0];
     this.button = this.element.querySelector('[role="button"]');
-    this.height = this.element.getBoundingClientRect().height;
-    this.observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${this.height}px`});
+    var height = getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
+    this.observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${height}`});
     this.targets = [];
     this.targetIndices = {};
     this.indicesInViewPort = [];
@@ -81,6 +81,6 @@ class Scrollspy {
   }
 }
 
-window.addEventListener('load', function() {
+document.addEventListener('DOMContentLoaded', function() {
   new Scrollspy(document.getElementsByTagName('nav')[0]);
 });
