@@ -56,6 +56,9 @@ class Scrollspy {
         }
       }
     }
+    if (this.indicesInViewPort.length === 0) {
+      return;
+    }
     if (oldTargetIndex === this.indicesInViewPort[0]) {
       return;
     }
