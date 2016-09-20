@@ -113,12 +113,12 @@ class HashchangeDispatcher {
     if (event.detail.oldTarget) {
       oldURL.hash = '#' + event.detail.oldTarget.id;
     }
+    hashchangeEvent.oldURL = oldURL.toString();
     if (event.detail.newTarget) {
       var newURL = new URL(location.href);
       newURL.hash = '#' + event.detail.newTarget.id;
+      hashchangeEvent.newURL = newURL.toString();
     }
-    hashchangeEvent.oldURL = oldURL.toString();
-    hashchangeEvent.newURL = newURL.toString();
     dispatchEvent(hashchangeEvent);
   }
 }
