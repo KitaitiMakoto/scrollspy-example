@@ -3,8 +3,6 @@
 class Scrollspy {
   constructor(element) {
     this.element = element;
-    this.ul = this.element.getElementsByTagName('ul')[0];
-    this.button = this.element.getElementsByTagName('button')[0];
     this.targets = [];
     this.targetIndices = {};
     this.indicesInViewPort = [];
