@@ -75,10 +75,10 @@ class Navigation {
   }
 
   onTargetChange(event) {
-    var newTarget = event.detail.newTarget;
+    var newTargetId = event.detail.newTarget.id;
     this.links[event.detail.oldTarget.id].setAttribute('aria-selected', 'false');
-    this.links[newTarget.id].setAttribute('aria-selected', 'true');
-    this.element.dataset.scrollspyTarget = newTarget.id;
+    this.links[newTargetId].setAttribute('aria-selected', 'true');
+    this.element.dataset.scrollspyTarget = newTargetId;
   }
 
   expand() {
