@@ -9,12 +9,11 @@ class Scrollspy {
     this.targetIndices = {};
     this.indicesInViewPort = [];
     var as = element.querySelectorAll('[href^="#"]');
+    var id;
     for (var i = 0, l = as.length; i < l; i++) {
-      (function(a) {
-        var id = a.hash.slice(1);
-        this.targets.push(document.getElementById(id));
-        this.targetIndices[id] = i;
-      }.bind(this))(as[i])
+      id = as[i].hash.slice(1);
+      this.targets.push(document.getElementById(id));
+      this.targetIndices[id] = i;
     }
     var height = getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
     var observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${height}`});
