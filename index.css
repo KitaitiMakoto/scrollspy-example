@@ -38,27 +38,27 @@ nav ul {
     transition: transform 100ms;
 }
 
-nav ul[data-scrollspy-index="0"] {
+nav[data-scrollspy-target="whatsthis"] ul {
     transform: translateY(calc(-0 * var(--scrollspy-height)));
 }
 
-nav ul[data-scrollspy-index="1"] {
+nav[data-scrollspy-target="motivation"] ul {
     transform: translateY(calc(-1 * var(--scrollspy-height)));
 }
 
-nav ul[data-scrollspy-index="2"] {
+nav[data-scrollspy-target="smoothscroll"] ul {
     transform: translateY(calc(-2 * var(--scrollspy-height)));
 }
 
-nav ul[data-scrollspy-index="3"] {
+nav[data-scrollspy-target="sticky"] ul {
     transform: translateY(calc(-3 * var(--scrollspy-height)));
 }
 
-nav ul[data-scrollspy-index="4"] {
+nav[data-scrollspy-target="custom-property"] ul {
     transform: translateY(calc(-4 * var(--scrollspy-height)));
 }
 
-nav ul[data-scrollspy-index="5"] {
+nav[data-scrollspy-target="source-code"] ul {
     transform: translateY(calc(-5 * var(--scrollspy-height)));
 }
 

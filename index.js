@@ -5,8 +5,6 @@ class Scrollspy {
     this.element = element;
     this.ul = this.element.getElementsByTagName('ul')[0];
     this.button = this.element.getElementsByTagName('button')[0];
-    var height = getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
-    this.observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${height}`});
     this.targets = [];
     this.targetIndices = {};
     this.indicesInViewPort = [];
@@ -14,27 +12,13 @@ class Scrollspy {
     for (var i = 0, l = as.length; i < l; i++) {
       (function(a) {
         var id = a.hash.slice(1);
-        this.targets.push({
-          a: a,
-          target: document.getElementById(id)
-        });
+        this.targets.push(document.getElementById(id));
         this.targetIndices[id] = i;
       }.bind(this))(as[i])
     }
-    this.targets.forEach(function(pair) {
-      this.observer.observe(pair.target);
-      pair.a.addEventListener('click', function(event) {
-        this.element.setAttribute('aria-expanded', 'false');
-        this.button.setAttribute('aria-expanded', 'false');
-      }.bind(this));
-    }.bind(this));
-    this.element.addEventListener('targetchange', this.onTargetChange.bind(this));
-    this.button.addEventListener('click', function(event) {
-      var expanded = this.element.getAttribute('aria-expanded');
-      var value = (expanded === 'true') ? 'false' : 'true';
-      this.element.setAttribute('aria-expanded', value);
-      this.button.setAttribute('aria-expanded', value);
-    }.bind(this));
+    var height = getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
+    var observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${height}`});
+    this.targets.forEach(observer.observe.bind(observer));
   }
 
   onIntersectionChange(changes) {
@@ -64,26 +48,82 @@ class Scrollspy {
     }
     var event = new CustomEvent('targetchange', {
       detail: {
-        newTargetIndex: this.indicesInViewPort[0],
-        oldTargetIndex: oldTargetIndex
+        newTarget: this.targets[this.indicesInViewPort[0]],
+        oldTarget: this.targets[oldTargetIndex]
       }
     });
     this.element.dispatchEvent(event);
   }
+}
+
+class Navigation {
+  constructor(element) {
+    this.element = element;
+    this.links = {};
+    var button = this.element.getElementsByTagName('button')[0];
+    var as = this.element.getElementsByTagName('a');
+    for (var i = 0, l = as.length; i < l; i++) {
+      var a = as[i];
+      this.links[a.hash.slice(1)] = a;
+      a.addEventListener('click', function(event) {
+        element.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-expanded', 'false');
+      });
+    }
+    button.addEventListener('click', function(event) {
+      var expanded = this.element.getAttribute('aria-expanded');
+      var value = (expanded === 'true') ? 'false' : 'true';
+      this.element.setAttribute('aria-expanded', value);
+      button.setAttribute('aria-expanded', value);
+    }.bind(this));
+  }
 
   onTargetChange(event) {
-    this.targets[event.detail.oldTargetIndex].a.setAttribute('aria-selected', 'false');
-    this.targets[event.detail.newTargetIndex].a.setAttribute('aria-selected', 'true');
-    this.ul.dataset.scrollspyIndex = '' + event.detail.newTargetIndex;
-    var a = this.targets[event.detail.newTargetIndex].a;
-    var event = new Event('hashchange');
-    event.oldURL = location.href;
-    event.newURL = a.href;
-    history.replaceState(null, a.textContent, a.hash);
-    dispatchEvent(event);
+    var newTarget = event.detail.newTarget;
+    this.links[event.detail.oldTarget.id].setAttribute('aria-selected', 'false');
+    this.links[newTarget.id].setAttribute('aria-selected', 'true');
+    this.element.dataset.scrollspyTarget = newTarget.id;
+  }
+}
+
+class HistoryManager {
+  onTargetChange(event) {
+    history.replaceState(null, null, '#' + event.detail.newTarget.id);
+  }
+}
+
+class HashchangeDispatcher {
+  onTargetChange(event) {
+    var hashchangeEvent = new Event('hashchange');
+    hashchangeEvent.oldURL = location.href;
+    var oldURL = new URL(location.href);
+    if (event.detail.oldTarget) {
+      oldURL.hash = '#' + event.detail.oldTarget.id;
+    }
+    if (event.detail.newTarget) {
+      var newURL = new URL(location.href);
+      newURL.hash = '#' + event.detail.newTarget.id;
+    }
+    hashchangeEvent.oldURL = oldURL.toString();
+    hashchangeEvent.newURL = newURL.toString();
+    dispatchEvent(hashchangeEvent);
   }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  new Scrollspy(document.getElementsByTagName('nav')[0]);
+  var nav = document.getElementsByTagName('nav')[0];
+
+  var navigation = new Navigation(nav);
+  nav.addEventListener('targetchange', navigation.onTargetChange.bind(navigation));
+
+  var historyManager = new HistoryManager();
+  nav.addEventListener('targetchange', historyManager.onTargetChange.bind(historyManager));
+
+  var hashchangeDispatcher = new HashchangeDispatcher();
+  nav.addEventListener('targetchange', hashchangeDispatcher.onTargetChange.bind(hashchangeDispatcher));
+  addEventListener('hashchange', function(event) {
+    console.dir(event);
+  });
+
+  new Scrollspy(nav);
 });
