@@ -4,7 +4,7 @@ class Scrollspy {
   constructor(element) {
     this.element = element;
     this.ul = this.element.getElementsByTagName('ul')[0];
-    this.button = this.element.querySelector('[role="button"]');
+    this.button = this.element.getElementsByTagName('button')[0];
     var height = getComputedStyle(this.element).getPropertyValue('--scrollspy-height').trim();
     this.observer = new IntersectionObserver(this.onIntersectionChange.bind(this), {rootMargin: `-${height}`});
     this.targets = [];

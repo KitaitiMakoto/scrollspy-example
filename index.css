@@ -108,7 +108,7 @@ nav li:nth-of-type(3) a {
     color: gray;
 }
 
-nav [role="button"] {
+nav button {
     position: absolute;
     top: 0;
     right: 0;
@@ -124,7 +124,7 @@ nav [role="button"] {
     transition: transform 300ms;
 }
 
-nav [role="button"][aria-expanded="true"] {
+nav button[aria-expanded="true"] {
     width: auto;
     padding-right: 0.5em;
     transform: rotateX(180deg);
