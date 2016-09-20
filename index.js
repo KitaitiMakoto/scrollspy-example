@@ -109,7 +109,6 @@ class HistoryManager {
 class HashchangeDispatcher {
   onTargetChange(event) {
     var hashchangeEvent = new Event('hashchange');
-    hashchangeEvent.oldURL = location.href;
     var oldURL = new URL(location.href);
     if (event.detail.oldTarget) {
       oldURL.hash = '#' + event.detail.oldTarget.id;
