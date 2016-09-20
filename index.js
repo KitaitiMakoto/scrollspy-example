@@ -60,10 +60,14 @@ class Navigation {
     for (var i = 0, l = as.length; i < l; i++) {
       var a = as[i];
       this.links[a.hash.slice(1)] = a;
-      a.addEventListener('click', this.close.bind(this));
+      a.addEventListener('click', this.shrink.bind(this));
     }
     this.button = this.element.getElementsByTagName('button')[0];
     this.button.addEventListener('click', this.toggle.bind(this));
+  }
+
+  get expanded() {
+    return this.element.getAttribute('aria-expanded') === 'true';
   }
 
   get height() {
@@ -77,16 +81,22 @@ class Navigation {
     this.element.dataset.scrollspyTarget = newTarget.id;
   }
 
-  close() {
+  expand() {
+    this.element.setAttribute('aria-expanded', 'true');
+    this.button.setAttribute('aria-expanded', 'true');
+  }
+
+  shrink() {
     this.element.setAttribute('aria-expanded', 'false');
     this.button.setAttribute('aria-expanded', 'false');
   }
 
   toggle() {
-    var expanded = this.element.getAttribute('aria-expanded');
-    var value = (expanded === 'true') ? 'false' : 'true';
-    this.element.setAttribute('aria-expanded', value);
-    this.button.setAttribute('aria-expanded', value);
+    if (this.expanded) {
+      this.shrink();
+    } else {
+      this.expand();
+    }
   }
 }
 
