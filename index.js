@@ -57,22 +57,14 @@ class Navigation {
   constructor(element) {
     this.element = element;
     this.links = {};
-    var button = this.element.getElementsByTagName('button')[0];
+    this.button = this.element.getElementsByTagName('button')[0];
     var as = this.element.getElementsByTagName('a');
     for (var i = 0, l = as.length; i < l; i++) {
       var a = as[i];
       this.links[a.hash.slice(1)] = a;
-      a.addEventListener('click', function(event) {
-        element.setAttribute('aria-expanded', 'false');
-        button.setAttribute('aria-expanded', 'false');
-      });
+      a.addEventListener('click', this.close.bind(this));
     }
-    button.addEventListener('click', function(event) {
-      var expanded = this.element.getAttribute('aria-expanded');
-      var value = (expanded === 'true') ? 'false' : 'true';
-      this.element.setAttribute('aria-expanded', value);
-      button.setAttribute('aria-expanded', value);
-    }.bind(this));
+    this.button.addEventListener('click', this.toggle.bind(this));
   }
 
   onTargetChange(event) {
@@ -80,6 +72,18 @@ class Navigation {
     this.links[event.detail.oldTarget.id].setAttribute('aria-selected', 'false');
     this.links[newTarget.id].setAttribute('aria-selected', 'true');
     this.element.dataset.scrollspyTarget = newTarget.id;
+  }
+
+  close() {
+    this.element.setAttribute('aria-expanded', 'false');
+    this.button.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle() {
+    var expanded = this.element.getAttribute('aria-expanded');
+    var value = (expanded === 'true') ? 'false' : 'true';
+    this.element.setAttribute('aria-expanded', value);
+    this.button.setAttribute('aria-expanded', value);
   }
 }
 
