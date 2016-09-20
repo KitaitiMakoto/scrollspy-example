@@ -17,21 +17,7 @@ class Scrollspy {
   onIntersectionChange(changes) {
     var oldTargetIndex = this.indicesInViewPort[0] || 0;
     for (var i = changes.length - 1; i >= 0; i--) {
-      var change = changes[i];
-      var index = this.targetIndices[change.target.id];
-      if (change.intersectionRatio === 0) {
-        var indexInViewPort = this.indicesInViewPort.indexOf(index);
-        this.indicesInViewPort.splice(indexInViewPort, 1);
-      } else {
-        if (index < oldTargetIndex) {
-          this.indicesInViewPort.unshift(index);
-        } else if (index > this.indicesInViewPort[this.indicesInViewPort.length - 1]) {
-          this.indicesInViewPort.push(index);
-        } else {
-          this.indicesInViewPort.push(index);
-          this.indicesInViewPort.sort();
-        }
-      }
+      this.updateIndicesInViewPort(changes[i], oldTargetIndex);
     }
     if (this.indicesInViewPort.length === 0) {
       return;
@@ -46,6 +32,23 @@ class Scrollspy {
       }
     });
     this.element.dispatchEvent(event);
+  }
+
+  updateIndicesInViewPort(change, oldTargetIndex) {
+    var index = this.targetIndices[change.target.id];
+    if (change.intersectionRatio === 0) {
+      var indexInViewPort = this.indicesInViewPort.indexOf(index);
+      this.indicesInViewPort.splice(indexInViewPort, 1);
+    } else {
+      if (index < oldTargetIndex) {
+        this.indicesInViewPort.unshift(index);
+      } else if (index > this.indicesInViewPort[this.indicesInViewPort.length - 1]) {
+        this.indicesInViewPort.push(index);
+      } else {
+        this.indicesInViewPort.push(index);
+        this.indicesInViewPort.sort();
+      }
+    }
   }
 }
 
