@@ -60,7 +60,7 @@ class Navigation {
     for (var i = 0, l = as.length; i < l; i++) {
       var a = as[i];
       this.links[a.hash.slice(1)] = a;
-      a.addEventListener('click', this.shrink.bind(this));
+      a.addEventListener('click', this.collapse.bind(this));
     }
     this.button = this.element.getElementsByTagName('button')[0];
     this.button.addEventListener('click', this.toggle.bind(this));
@@ -86,14 +86,14 @@ class Navigation {
     this.button.setAttribute('aria-expanded', 'true');
   }
 
-  shrink() {
+  collapse() {
     this.element.setAttribute('aria-expanded', 'false');
     this.button.setAttribute('aria-expanded', 'false');
   }
 
   toggle() {
     if (this.expanded) {
-      this.shrink();
+      this.collapse();
     } else {
       this.expand();
     }
