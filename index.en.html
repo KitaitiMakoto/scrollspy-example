@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang=en-US>
+  <meta charset=UTF-8>
+  <title>Scrollspy example for mobile</title>
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <link href=node_modules/sanitize.css/sanitize.css rel=stylesheet>
+  <link href=index.css rel=stylesheet>
+
+  <h1 id=top>Scrollspy example for mobile</h1>
+
+  <nav id=nav role=listbox aria-expanded=false>
+    <ul>
+      <li><a href=#whatsthis role=option>What's this?</a></li>
+      <li><a href=#motivation role=option>Motivation</a></li>
+      <li><a href=#smoothscroll role=option>Smooth scroll by CSS</a></li>
+      <li><a href=#sticky role=option>Sticky positioning by CSS</a></li>
+      <li><a href=#custom-property role=option>CSS variables</a></li>
+      <li><a href=#source-code role=option>Source code</a></li>
+    </ul>
+    <button aria-controls=nav aria-expanded=false>▼</button>
+  </nav>
+
+  <section id=whatsthis>
+    <h2>What's this?</h2>
+    <p>This is an example of scrollspy for mobile.</p>
+    <p>Scrollspy is often shown as table of contents in sidebars. But, for mobile, we rarely see scrollspy because sidebars are usually not generated.</p>
+    <p>This is a proposal of scrollspy for mobile which is fixed on the top, shows only single line  and changes it on scrolling.</p>
+  </section>
+  <section id=motivation>
+    <h2>Motivation for this page</h2>
+    <p>I was impressed by <a href="https://blog.jxck.io/entries/2016-06-25/intersection-observer.html">Intersection Observer を用いた要素出現検出の最適化</a>("Optimization of detect of element appearance by Intersection Observer". You can see similar article in English here: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API">Intersection Observer API</a>) and wanted to use it, then, chose scrollspy as a material.</p>
+  </section>
+  <section id=smoothscroll>
+    <h2>Smooth scroll by CSS</h2>
+    <p>CSS has <code>scroll-behavior</code> propery and by setting the value to <code>smooth</code> such as:</p>
+    <pre><code>body {
+      scroll-behavior: smooth;
+}</code></pre>
+    <p>browsers run smooth scroll automatically. This page also uses the feature.</p>
+    <p>Firefox(except for on iOS) supports it as of <time datetime="2016-09">September 2016</time>. Try this page on Firefox.</p>
+    <p>See also: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior">scroll-behavior - CSS | MDN</a></p>
+  </section>
+  <section id=sticky>
+    <h2>Sticky poisitioning only by CSS（<code>position: sticky</code>）</h2>
+    <p>The navigation by scrollspy in this page is under the page title at first, and after scrolling, becomes fixed at the top of the page.</p>
+    <p>This kind of feature is often implemented by combination of JavaScript and CSS. But it was done by only CSS in this page. By setting <code>position</code> property to <code>sticky</code> such as:</p>
+    <pre><code>nav {
+      position: sticky;
+      /*
+        :
+        :
+      */
+}</code></pre>
+    <p>the behavior as said above is achieved.</p>
+    <p>As of <time datetime="2016-09">September 2016</time>, Firefox and Safari support the property.</p>
+    <p>See also: <a href="https://www.sitepoint.com/css-position-sticky-introduction-polyfills/">CSS &quot;position: sticky&quot; - Introduction and Polyfills</a></p>
+  </section>
+  <section id=custom-property>
+    <h2>CSS custom properties(CSS variables)</h2>
+    <p>The height of scrollspy is defined by a CSS custom property although you cannot see it directly in the page.</p>
+    <p>Each section has top padding whose height is the same to scrollspy's. Leaks of setting is prevented by managing the hight by a shared variable.</p>
+    <p>Now Chrome and Safari support CSS custom properties as well as Firefox.</p>
+    <p>See also: <a href="https://developers.google.com/web/updates/2016/02/css-variables-why-should-you-care">CSS Variables: Why Should You Care? &nbsp;|&nbsp; Web &nbsp;|&nbsp; Google Developers</a></p>
+  </section>
+  <section id=source-code>
+    <h2>Source code</h2>
+    <p>Source code of this page is hosted by <a href="https://github.com">GitHub</a>.</p>
+    <p>Source code:<a href="https://github.com/KitaitiMakoto/scrollspy-example">KitaitiMakoto/scrollspy-example</a></p>
+  </section>
+  <p>&copy;<a href="https://github.com/KitaitiMakoto">Kitaiti Makoto</a></p>
+  <script src=node_modules/intersection-observer/intersection-observer.js></script>
+  <script src=index.js></script>
+</html>
