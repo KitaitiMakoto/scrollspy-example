@@ -18,6 +18,16 @@ h2 {
     margin: 0;
 }
 
+ul#langs {
+    padding: 0;
+    list-style: none;
+    text-align: right;
+}
+
+#langs li {
+    display: inline-block;
+}
+
 nav {
     position: -webkit-sticky;
     position: sticky;
