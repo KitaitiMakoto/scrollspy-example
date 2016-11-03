@@ -60,10 +60,10 @@ class Navigation {
     for (var i = 0, l = as.length; i < l; i++) {
       var a = as[i];
       this.links[a.hash.slice(1)] = a;
-      a.addEventListener('click', this.collapse.bind(this));
+      a.addEventListener('click', this.collapse.bind(this), {passive: true});
     }
     this.button = this.element.getElementsByTagName('button')[0];
-    this.button.addEventListener('click', this.toggle.bind(this));
+    this.button.addEventListener('click', this.toggle.bind(this)), {passive: true};
   }
 
   get expanded() {
@@ -129,11 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var historyManager = new HistoryManager();
   var hashchangeDispatcher = new HashchangeDispatcher();
   [navigation, historyManager, hashchangeDispatcher].forEach(function(listener) {
-    nav.addEventListener('targetchange', listener.onTargetChange.bind(listener));
+    nav.addEventListener('targetchange', listener.onTargetChange.bind(listener), {passive: true});
   });
   addEventListener('hashchange', function(event) {
     console.dir(event);
-  });
+  }, {passive: true});
 
   new Scrollspy(nav, Object.keys(navigation.links), {rootMargin: `-${navigation.height}`});
 });
