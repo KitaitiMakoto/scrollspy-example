@@ -1,0 +1,10 @@
+image: node
+
+pages:
+  script:
+    - npm install
+  artifacts:
+    patsh:
+      - .
+  only:
+    - master
