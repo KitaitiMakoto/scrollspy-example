@@ -3,8 +3,5 @@ image: node
 pages:
   script:
     - npm install
-  artifacts:
-    paths:
-      - "."
   only:
     - master
