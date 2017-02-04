@@ -5,6 +5,6 @@ pages:
     - npm install
   artifacts:
     patsh:
-      - .
+      - "."
   only:
     - master
