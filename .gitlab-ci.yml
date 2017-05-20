@@ -7,7 +7,7 @@ pages:
   script:
     - mkdir .public
     - npm install
-    - cp * .public/
+    - cp -r * .public/
     - mv .public public
   artifacts:
     paths:
