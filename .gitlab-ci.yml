@@ -5,9 +5,12 @@ pages:
     paths:
       - node_modules/
   script:
+    - mkdir .public
     - npm install
+    - cp * .public/
+    - mv .public public
   artifacts:
     paths:
-      - .
+      - public
   only:
     - master
