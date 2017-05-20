@@ -6,5 +6,8 @@ pages:
       - node_modules/
   script:
     - npm install
+  artifacts:
+    paths:
+      - .
   only:
     - master
