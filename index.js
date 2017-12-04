@@ -38,7 +38,10 @@ class Scrollspy {
     var index = this.targetIndices[change.target.id];
     if (change.intersectionRatio === 0) {
       var indexInViewPort = this.indicesInViewPort.indexOf(index);
-      this.indicesInViewPort.splice(indexInViewPort, 1);
+      
+      if (indexInViewport !== -1) {
+        this.indicesInViewPort.splice(indexInViewPort, 1);
+      }
     } else {
       if (index < oldTargetIndex) {
         this.indicesInViewPort.unshift(index);
