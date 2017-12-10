@@ -39,7 +39,7 @@ class Scrollspy {
     if (change.intersectionRatio === 0) {
       var indexInViewPort = this.indicesInViewPort.indexOf(index);
       
-      if (indexInViewport !== -1) {
+      if (indexInViewPort !== -1) {
         this.indicesInViewPort.splice(indexInViewPort, 1);
       }
     } else {
